@@ -3,8 +3,7 @@ int average(FILE *f, int size);
 void swap(FILE *f, int size);
 void input(FILE *f,int k);
 void output(FILE *f, int k);
-int mult(FILE *f, int size, int num);
-void cycleSh(FILE *f,int size);
+
 int main() {
     setbuf(stdout, 0);
     FILE *f;
@@ -60,35 +59,6 @@ void output(FILE *f, int k) {
         fscanf_s(f,"%d",&buf);
         printf("%d\n",buf);
     }
-}
-
-int mult(FILE *f, int size, int num) {
-    int counter=0,buf;
-
-    fseek(f,0,0);
-    for (int i = 0; i < size; ++i) {
-
-        fread(&buf, sizeof(int),1,f);
-        if(buf%num==0) counter++;
-    }
-    return counter;
-}
-
-void cycleSh(FILE *f, int size) {
-    fseek(f, 0,0);
-    int buf,buf2;
-    fread(&buf, sizeof(int),1,f);
-    fread(&buf2, sizeof(int),1,f);
-    fseek(f, sizeof(int),0);
-    for (int i = 2; i <= size; ++i) {
-        fwrite(&buf,sizeof(int),1,f);
-        buf=buf2;
-        fseek(f, i*sizeof(int),0);
-        fread(&buf2, sizeof(int),1,f);
-        fseek(f, i*sizeof(int),0);
-    }
-    fseek(f, 0,0);
-    fwrite(&buf,sizeof(int),1,f);
 }
 
 int average(FILE *f, int size) {
